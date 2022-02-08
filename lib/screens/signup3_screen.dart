@@ -215,7 +215,7 @@ class _SignUp3State extends State<SignUp3> {
             //button begins
             ElevatedButton(onPressed: (){
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
+                  context, MaterialPageRoute(builder: (context) => Cooperative()));
             },  child: Text('Cooperatives'),
 
             ),

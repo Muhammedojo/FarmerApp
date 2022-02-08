@@ -1,5 +1,5 @@
 import 'dart:async';
-
+//import 'package:splashscreen/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
@@ -13,25 +13,33 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // late SharedPreferences loginData;
-  // late bool newUser;
-  // late String username;
-  // Future<SharedPreferences> sharedPreferences() async =>
-  //     await SharedPreferences.getInstance();
+  @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 3), () {
+      _navigateUser();
 
-  // void initial() async {
-  //   loginData = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     username = loginData.getString('username')!;
-  //   });
-  // }
+    });
+  }
 
-  // void initialState() {
-  //   super.initState();
-  //   initial();
-  // }
+  void _navigateUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool checkValue = prefs.containsKey('token');
+    if (checkValue) {
+      Navigator.push(context,
+        MaterialPageRoute(
+            builder: (context) => const Dash()
+        ),
+      );
+    } else {
+      Navigator.push(context,
+          MaterialPageRoute(
+              builder: (context) => const LogIn()
+          )
+      );
+    }
+  }
 
-  // bool hasLoggedIn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -69,21 +77,7 @@ class _HomeState extends State<Home> {
                   margin: const EdgeInsets.all(10),
                   child: RaisedButton(
                     onPressed: () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
 
-                      bool checkValue = prefs.containsKey('value');
-                      if (checkValue) {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (_) => const Dash(),
-                          ),
-                        );
-                      } else {
-                        MaterialPageRoute(
-                          builder: (_) => const LogIn(),
-                        );
-                      }
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80.0)),
