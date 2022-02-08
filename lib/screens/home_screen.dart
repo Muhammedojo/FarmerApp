@@ -1,34 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import './login.dart';
-import 'dash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'login_screen.dart';
+import 'dashboard_screen.dart';
 
 class Home extends StatefulWidget {
-  late final bool user;
-  Home(this.user);
+  // ignore: use_key_in_widget_constructors
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  @override
-  void initState() {
-    super.initState();
-    startHome();
-  }
-
-  startHome() {
-    var duration = const Duration(seconds: 3);
-    return Timer(duration, () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-            builder: (c) => widget.user ? const Dash() : const LogIn()),
-      );
-    });
-  }
-
   // late SharedPreferences loginData;
   // late bool newUser;
   // late String username;
@@ -84,7 +68,23 @@ class _HomeState extends State<Home> {
                   height: 50.0,
                   margin: const EdgeInsets.all(10),
                   child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+
+                      bool checkValue = prefs.containsKey('value');
+                      if (checkValue) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (_) => const Dash(),
+                          ),
+                        );
+                      } else {
+                        MaterialPageRoute(
+                          builder: (_) => const LogIn(),
+                        );
+                      }
+                    },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80.0)),
                     padding: const EdgeInsets.all(0.0),

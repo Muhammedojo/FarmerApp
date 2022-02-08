@@ -2,7 +2,7 @@ import 'package:dashboard/models/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
-import './dash.dart';
+import 'dashboard_screen.dart';
 import '../models/login_model.dart';
 import 'package:dashboard/services/http_service.dart';
 
@@ -173,6 +173,7 @@ class _LogInState extends State<LogIn> {
                                             print("Test 1.5");
                                             _httpService.saveToken(user.token!);
                                             print("Test 2");
+                                            print(user.token);
                                             Navigator.of(context)
                                                 .pushReplacement(
                                               MaterialPageRoute(

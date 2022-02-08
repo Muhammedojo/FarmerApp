@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/bank.dart';
-import './signup2.dart';
-import './dash.dart';
+import 'signup2_screen.dart';
+import 'dashboard_screen.dart';
 import './cooperative_list_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -226,7 +226,8 @@ class _SignUp3State extends State<SignUp3> {
                 children: [
                   Container(
                     height: 50.0,
-                    margin: EdgeInsets.all(10),
+                    margin:const EdgeInsets.all(10),
+                    // ignore: deprecated_member_use
                     child: RaisedButton(
                       //Navigator.push(context, MaterialPageRoute(builder: (context) => farmerslist
                       onPressed: () {
@@ -261,7 +262,8 @@ class _SignUp3State extends State<SignUp3> {
                   ),
                   Container(
                     height: 50.0,
-                    margin: EdgeInsets.all(10),
+                    margin:const EdgeInsets.all(10),
+                    // ignore: deprecated_member_use
                     child: RaisedButton(
                       onPressed: () {
                         Navigator.push(

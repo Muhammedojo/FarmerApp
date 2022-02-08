@@ -4,9 +4,9 @@ import 'package:dashboard/theme/theme_constant.dart';
 import 'package:dashboard/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import './signup.dart';
+import 'signup_screen.dart';
 import '../services/http_service.dart';
-import 'login.dart';
+import 'login_screen.dart';
 
 ThemeManager _themeManager = ThemeManager();
 

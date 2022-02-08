@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './signup.dart';
-import './signup3.dart';
+import 'signup_screen.dart';
+import 'signup3_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 class SignUp2 extends StatefulWidget {
