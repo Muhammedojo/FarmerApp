@@ -1,9 +1,9 @@
 import 'dart:async';
-//import 'package:splashscreen/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
 import 'dashboard_screen.dart';
+import 'nav.dart';
 
 class Home extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -18,7 +18,6 @@ class _HomeState extends State<Home> {
     super.initState();
     Timer(const Duration(seconds: 3), () {
       _navigateUser();
-
     });
   }
 
@@ -26,20 +25,15 @@ class _HomeState extends State<Home> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool checkValue = prefs.containsKey('token');
     if (checkValue) {
-      Navigator.push(context,
-        MaterialPageRoute(
-            builder: (context) => const Dash()
-        ),
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Nav()),
       );
     } else {
-      Navigator.push(context,
-          MaterialPageRoute(
-              builder: (context) => const LogIn()
-          )
-      );
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const LogIn()));
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +70,7 @@ class _HomeState extends State<Home> {
                   height: 50.0,
                   margin: const EdgeInsets.all(10),
                   child: RaisedButton(
-                    onPressed: () async {
-
-                    },
+                    onPressed: () async {},
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80.0)),
                     padding: const EdgeInsets.all(0.0),
@@ -109,19 +101,4 @@ class _HomeState extends State<Home> {
           ),
         ));
   }
-
-  // Future <bool?> hasLoggedIn() async{
-  //   return await sharedPreferences().then((value) => value.getBool('isLoggedIn', false));
-  // }
-
-  // Future<void> checkIfLoggedIn() async {
-  //   bool hasLogged = hasLoggedIn;
-  //   if (hasLogged) {
-  //     Navigator.push(
-  //         context, MaterialPageRoute(builder: (context) => const LogIn()));
-  //   } else {
-  //     Navigator.push(
-  //         context, MaterialPageRoute(builder: (context) => const Dash()));
-  //   }
-  // }
 }

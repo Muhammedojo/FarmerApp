@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'home_screen.dart';
 import 'signup2_screen.dart';
+import 'dashboard_screen.dart';
+import 'cooperative_list_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 class SignUp extends StatefulWidget {
@@ -12,6 +14,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+
   @override
   late DateTime date;
 
@@ -800,15 +804,7 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
       ),
-        bottomNavigationBar: ConvexAppBar(
-          backgroundColor: Colors.blueGrey[900],
-          items: const [
-            TabItem(icon: Icons.home, title: 'Home'),
-            TabItem(icon: Icons.map, title: 'Discovery'),
-            TabItem(icon: Icons.message, title: 'Message'),
-            TabItem(icon: Icons.people, title: 'Profile'),
-          ],
-        )
+
     );
   }
 }

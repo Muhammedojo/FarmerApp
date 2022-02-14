@@ -2,27 +2,25 @@ import 'dart:async';
 import 'dart:convert';
 import '../models/login_model.dart';
 import 'package:dio/dio.dart';
-import '../models/cooperative.dart';
+import '../models/cooperative_model.dart';
+import '../models/farmers_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class HttpService {
   late Dio _dio;
 
   final _baseUrl = 'https://wb-staging.afexnigeria.com/WB3/api/v1/';
-  Future<SharedPreferences> sharedPreferences()  async => await SharedPreferences.getInstance();
-
-
+  Future<SharedPreferences> sharedPreferences() async =>
+      await SharedPreferences.getInstance();
 
   HttpService() {
     _dio = Dio();
-    _dio.options.connectTimeout = 5000;
+    _dio.options.connectTimeout = 10000;
     _dio.options.receiveTimeout = 5000;
     _dio.options.baseUrl = _baseUrl;
 
     //addInterceptors();
   }
-
 
   Future<UserDetailsModel?> login(String username, String password) async {
     final data = {
@@ -33,51 +31,63 @@ class HttpService {
     try {
       Response response;
 
-      response =
-      await _dio.post("api-token-auth/", data: data, options: Options(
-          contentType: "application/json"),);
-
-      if (response.statusCode == 200) { ///success response from server
+      response = await _dio.post(
+        "api-token-auth/",
+        data: data,
+        options: Options(contentType: "application/json"),
+      );
+      if (response.statusCode == 200) {
         final body = UserDetailsModel.fromJson(response.data);
-       // print("response code: ${body.responseCode}");
-        // print("response code: ${body.message}");
-        // print("response code: ${body.username}");
-        // print(data);
-
         return body;
       } else {
         return UserDetailsModel(message: response.statusMessage);
       }
     } catch (e) {
-     // print(e.toString());
-      return UserDetailsModel(username: null,
+      // print(e.toString());
+      return UserDetailsModel(
+          username: null,
           token: null,
           responseCode: "103",
           message: e.toString());
     }
   }
 
-  Future<Cooperative?> getCooperative({required String id}) async {
-    Cooperative? cooperative;
+  Future<List<Data>?> getCooperative() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // bool checkValue = prefs.containsKey('token');
+    // if (checkValue){}
     try {
-      Response userData = await _dio.get(_baseUrl + 'cooperatives/');
-      //print('User Info: ${userData.data}');
-      cooperative = Cooperative.fromJson(userData.data);
+      Response response = await _dio.get(_baseUrl + 'cooperatives/');
+      CooperativeListModel cooperativeListModel = CooperativeListModel.fromJson(response.data);
+      return cooperativeListModel.data;
     } on DioError catch (e) {
-
       if (e.response != null) {
-        // print('Dio error!');
-        // print('STATUS: ${e.response?.statusCode}');
-        // print('DATA: ${e.response?.data}');
-        // print('HEADERS: ${e.response?.headers}');
+       // print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
       } else {
         // Error due to setting up or sending the request
-        // print('Error sending request!');
-        // print(e.message);
-
+        print('Error sending request!');
+        print(e.message);
       }
     }
-    return cooperative;
+  }
+
+  Future<FarmersListModel?> getFarmers() async {
+    FarmersListModel? farmers;
+    try {
+      Response farmerData = await _dio.get(_baseUrl + 'farmer/list/');
+      print("Farmer Info: ${farmerData.data}");
+      farmers = FarmersListModel.fromJson(farmerData.data);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print("Dio error");
+      } else {
+        print("e.message");
+      }
+    }
+    return farmers;
   }
 
   Future<UserModel?> getUser() async {
@@ -85,7 +95,10 @@ class HttpService {
     final token = storage.getString('TOKEN');
     final email = storage.getString('EMAIL');
     if (token != null && email != null) {
-      return UserModel(username: email, token: token,);
+      return UserModel(
+        username: email,
+        token: token,
+      );
     } else {
       return null;
     }
@@ -114,10 +127,6 @@ class HttpService {
     return await sharedPreferences().then((value) => value.getString("token"));
   }
 
-
-
-
-
   //get headers(e
   Future<Map<String, String>> getHeader() async {
     String? token = await getToken() ?? "";
@@ -128,6 +137,4 @@ class HttpService {
     };
     return requestHeaders;
   }
-
 }
-

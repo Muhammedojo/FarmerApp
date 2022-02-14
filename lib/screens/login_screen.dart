@@ -5,6 +5,8 @@ import 'dashboard_screen.dart';
 import '../models/login_model.dart';
 import 'package:dashboard/services/http_service.dart';
 
+import 'nav.dart';
+
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
 
@@ -172,7 +174,7 @@ class _LogInState extends State<LogIn> {
                                             Navigator.of(context)
                                                 .pushReplacement(
                                               MaterialPageRoute(
-                                                builder: (_) => const Dash(),
+                                                builder: (_) => const Nav(),
                                               ),
                                             );
                                           } else {

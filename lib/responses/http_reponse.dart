@@ -12,3 +12,9 @@ class UserDetailsResponse{
 
 
 }
+class CooperativeListResponse{
+  CooperativeListResponse? cooperativeListResponse;
+  int? statusCode;
+  String? responseCode;
+  String? message;
+}

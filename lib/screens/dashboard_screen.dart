@@ -1,4 +1,3 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:dashboard/models/login_model.dart';
 import 'package:dashboard/theme/theme_constant.dart';
 import 'package:dashboard/theme/theme_manager.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'signup_screen.dart';
 import '../services/http_service.dart';
-import 'cooperative_list_screen.dart';
 import 'login_screen.dart';
 
 ThemeManager _themeManager = ThemeManager();
@@ -66,11 +64,10 @@ class _DashState extends State<Dash> {
               ],
             ),
             body:
-            //_pageOption[selectedPage],
-            Column(
+                //_pageOption[selectedPage],
+                Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-
                 Card(
                   elevation: 4,
                   shape: RoundedRectangleBorder(
@@ -137,12 +134,9 @@ class _DashState extends State<Dash> {
                           );
                         }))
               ],
-
             ),
-
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.miniEndFloat,
-
             floatingActionButton: FloatingActionButton(
                 child: const Icon(Icons.person_add),
                 backgroundColor: Colors.blueGrey[900],
@@ -151,19 +145,7 @@ class _DashState extends State<Dash> {
                       MaterialPageRoute(builder: (context) => const SignUp()));
                 }),
 
-            bottomNavigationBar: ConvexAppBar(
-
-              backgroundColor: Colors.blueGrey[900],
-
-
-              items: const [
-                TabItem(icon: Icons.person, title: 'Farmers'),
-                TabItem(icon: Icons.people, title: 'Cooperative'),
-                TabItem(icon: Icons.message, title: 'Message'),
-              ],
-
-
-            )));
+        ));
   }
 
   void logOut() async {
