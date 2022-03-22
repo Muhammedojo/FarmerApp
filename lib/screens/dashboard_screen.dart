@@ -1,7 +1,9 @@
 import 'package:dashboard/models/login_model.dart';
+import 'package:dashboard/screens/menu_drawer.dart';
 import 'package:dashboard/theme/theme_constant.dart';
 import 'package:dashboard/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'signup_screen.dart';
 import '../services/http_service.dart';
@@ -45,106 +47,105 @@ class _DashState extends State<Dash> {
         darkTheme: darkTheme,
         themeMode: _themeManager.themeMode,
         home: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.blueGrey[900],
-              actions: [
-                IconButton(
-                  onPressed: () async {
-                    logOut();
-                  },
-                  icon: const Icon(Icons.logout),
-                  color: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.blueGrey[900],
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  logOut();
+                },
+                icon: const Icon(Icons.logout),
+                color: Colors.white,
+              ),
+              Switch(
+                value: _themeManager.themeMode == ThemeMode.dark,
+                onChanged: (newValue) {
+                  _themeManager.toggleTheme(newValue);
+                },
+              )
+            ],
+            leading: IconButton(
+                onPressed: () => NavDrawer(),
+                icon: const Icon(Icons.menu_rounded)),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                Switch(
-                  value: _themeManager.themeMode == ThemeMode.dark,
-                  onChanged: (newValue) {
-                    _themeManager.toggleTheme(newValue);
-                  },
-                )
-              ],
-            ),
-            body:
-                //_pageOption[selectedPage],
-                Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: const Search(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    children: const [
-                      Text(
-                        "Registered Farmers",
-                        style: TextStyle(
-                          color: Colors.blueGrey,
-                          fontSize: 20,
-                          letterSpacing: 2.1,
-                        ),
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: const Search(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: const [
+                    Text(
+                      "Registered Farmers",
+                      style: TextStyle(
+                        color: Colors.blueGrey,
+                        fontSize: 20,
+                        letterSpacing: 2.1,
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
                 ),
-                Expanded(
-                    child: ListView.builder(
-                        itemCount: 5,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 20),
-                            child: ListTile(
-                                onTap: () {},
-                                title: const Text('Folio ID :'),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    SizedBox(height: 10),
-                                    Text(
-                                      'Muhammad',
-                                      style: TextStyle(
-                                        fontSize: 17.0,
-                                        color: Colors.blueGrey,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      itemCount: 5,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 20),
+                          child: ListTile(
+                              onTap: () {},
+                              title: const Text('Folio ID :'),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  SizedBox(height: 10),
+                                  Text(
+                                    'Muhammad',
+                                    style: TextStyle(
+                                      fontSize: 17.0,
+                                      color: Colors.blueGrey,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                    SizedBox(height: 10),
-                                    Text('Cooperative ID :'),
-                                  ],
-                                ),
-                                leading: const CircleAvatar(
-                                  radius: 30.0,
-                                  backgroundImage:
-                                      AssetImage('assets/images/girl.jpeg'),
-                                  backgroundColor: Colors.blueGrey,
-                                )),
-                          );
-                        }))
-              ],
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.miniEndFloat,
-            floatingActionButton: FloatingActionButton(
-                child: const Icon(Icons.person_add),
-                backgroundColor: Colors.blueGrey[900],
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const SignUp()));
-                }),
-
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text('Cooperative ID :'),
+                                ],
+                              ),
+                              leading: const CircleAvatar(
+                                radius: 30.0,
+                                backgroundImage:
+                                    AssetImage('assets/images/girl.jpeg'),
+                                backgroundColor: Colors.blueGrey,
+                              )),
+                        );
+                      }))
+            ],
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.miniEndFloat,
+          floatingActionButton: FloatingActionButton(
+              child: const Icon(Icons.person_add),
+              backgroundColor: Colors.blueGrey[900],
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const SignUp()));
+              }),
         ));
   }
 

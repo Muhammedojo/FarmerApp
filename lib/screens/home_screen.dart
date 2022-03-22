@@ -2,11 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
-import 'dashboard_screen.dart';
 import 'nav.dart';
 
 class Home extends StatefulWidget {
-  // ignore: use_key_in_widget_constructors
+  const Home({Key? key}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();

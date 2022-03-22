@@ -52,17 +52,15 @@ class HttpService {
     }
   }
 
-  Future<List<Data>?> getCooperative() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // bool checkValue = prefs.containsKey('token');
-    // if (checkValue){}
+  Future<List<CooperativeListModel>?> getCooperative() async {
     try {
-      Response response = await _dio.get(_baseUrl + 'cooperatives/');
-      CooperativeListModel cooperativeListModel = CooperativeListModel.fromJson(response.data);
-      return cooperativeListModel.data;
+      var response = getRequest("cooperatives");
+      CooperativeListModel cooperativeListModel =
+          CooperativeListModel.fromJson(jsonDecode(response.toString()));
+      //return cooperativeListModel.data;
     } on DioError catch (e) {
       if (e.response != null) {
-       // print('Dio error!');
+        // print('Dio error!');
         print('STATUS: ${e.response?.statusCode}');
         print('DATA: ${e.response?.data}');
         print('HEADERS: ${e.response?.headers}');
@@ -74,21 +72,38 @@ class HttpService {
     }
   }
 
-  Future<FarmersListModel?> getFarmers() async {
-    FarmersListModel? farmers;
-    try {
-      Response farmerData = await _dio.get(_baseUrl + 'farmer/list/');
-      print("Farmer Info: ${farmerData.data}");
-      farmers = FarmersListModel.fromJson(farmerData.data);
-    } on DioError catch (e) {
-      if (e.response != null) {
-        print("Dio error");
-      } else {
-        print("e.message");
-      }
-    }
-    return farmers;
-  }
+
+// Future<List<Data>> fetchData() async {
+// try {
+//     Response response = await Dio().get(_baseUrl + '/farmer/list');
+//     if (response.statusCode == 200) {
+//         var getUsersData = response.data as List;
+//         var listUsers = getUsersData.map((i) => Data.fromJSON(i)).toList();
+//         return listUsers;
+//         } else {
+//             throw Exception('Failed to load users');
+//         }
+//     } catch (e) {
+//         print(e);
+//     }
+// }
+  // Future<FarmersListModel?> getFarmers() async {
+  //   FarmersListModel? farmers;
+  //   try {
+  //     var Response = getRequest('farmer/list/');
+  //     FarmersListModel farmersListModel =
+  //         FarmersListModel.fromJson(jsonDecode(Response.toString()));
+  //     // print("Farmer Info: ${Response.data}");
+  //    // farmers = FarmersListModel.fromJson(Response.data);
+  //   } on DioError catch (e) {
+  //     if (e.response != null) {
+  //       print("Dio error");
+  //     } else {
+  //       print("e.message");
+  //     }
+  //   }
+  //   return farmers;
+  // }
 
   Future<UserModel?> getUser() async {
     SharedPreferences storage = await SharedPreferences.getInstance();
@@ -107,7 +122,7 @@ class HttpService {
   // get request for dio
   Future<Response> getRequest(String endpoint) async {
     var headers = await getHeader();
-    return await _dio.get(_baseUrl, options: Options(headers: headers));
+    return await _dio.get(endpoint, options: Options(headers: headers));
   }
 
   //Post Request for dio

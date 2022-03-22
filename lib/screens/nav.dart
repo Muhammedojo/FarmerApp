@@ -1,3 +1,4 @@
+import 'package:dashboard/screens/signup3_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -14,27 +15,28 @@ class Nav extends StatefulWidget {
 
 class _NavState extends State<Nav> {
   int currentIndex = 0;
-  List pages = const [Dash(),CooperativeDashboard(),SignUp(),];
+  List pages = const [
+    Dash(),
+    SignUp(),
+    SignUp3(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentIndex],
+        body: pages[currentIndex],
         bottomNavigationBar: ConvexAppBar(
             backgroundColor: Colors.blueGrey[900],
             items: const [
-
               TabItem(icon: Icons.person, title: 'Farmers'),
               TabItem(icon: Icons.people, title: 'Cooperatives'),
               TabItem(icon: Icons.add_chart, title: 'Chart'),
             ],
             initialActiveIndex: 0,
-            onTap:(int i){
+            onTap: (int i) {
               setState(() {
-                currentIndex =i;
+                currentIndex = i;
               });
-            }
-        )
-    );
+            }));
   }
 }
